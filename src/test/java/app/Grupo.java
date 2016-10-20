@@ -20,7 +20,7 @@ public class Grupo {
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="grupogen")
 	private Integer id;
 	
-	@Column(name="group_name", nullable=false, length=40)
+	@Column(name="group_name", nullable=false, length=40, unique=true)
 	private String name;
 	
 	@OneToMany(mappedBy="group")
@@ -54,6 +54,14 @@ public class Grupo {
 
 	public void setMembers(List<Persona> members) {
 		this.members = members;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) return false;
+		if (!(o instanceof Grupo)) return false;
+		Grupo g = (Grupo) o;
+		return g.getName().equals(getName());
 	}
 	
 }

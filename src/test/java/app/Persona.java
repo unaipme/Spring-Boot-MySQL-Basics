@@ -87,4 +87,15 @@ public class Persona {
 		return String.format("%s, %s (#%d)", lastName, firstName, id);
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) return false;
+		if (!(o instanceof Persona)) return false;
+		Persona p = (Persona) o;
+		if (p.getFirstName().equals(getFirstName()) && p.getLastName().equals(getLastName())) {
+			if (p.getGroup() == null && getGroup() == null) return true;
+			else return p.getGroup().equals(getGroup());
+		} else return false;
+	}
+	
 }
