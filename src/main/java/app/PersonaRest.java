@@ -1,6 +1,7 @@
 package app;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +25,23 @@ public class PersonaRest {
 	
 	@GetMapping("/{id}")
 	public Persona getOne(@PathVariable Integer id) {
-		return repo.findOne(id);
+		Optional<Persona> p = repo.findById(id);
+		if (!p.isPresent()) {
+			throw new NotFoundException("No person found with that ID");
+		}
+		return p.get();
 	}
 	
 	@GetMapping("/{id}/group")
 	public Grupo getGroup(@PathVariable Integer id) {
-		return repo.findOne(id).getGroup();
+		Optional<Persona> p = repo.findById(id);
+		if (!p.isPresent()) {
+			throw new NotFoundException("No person was found with that ID");
+		} else if (p.get().getGroup() == null) {
+			throw new NotFoundException(String.format("The person with ID %d does not belong to any group", id));
+		} else {
+			return p.get().getGroup();
+		}
 	}
 	
 	@PostMapping(params={"firstName", "lastName"})
@@ -37,7 +49,6 @@ public class PersonaRest {
 						@RequestParam(value="lastName") String lastName) {
 		try {
 			Persona p = new Persona(firstName, lastName);
-			System.out.println(p);
 			repo.save(p);
 			return "OK";
 		} catch (Exception e) {
