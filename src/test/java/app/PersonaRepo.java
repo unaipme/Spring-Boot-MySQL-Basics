@@ -11,4 +11,8 @@ public interface PersonaRepo extends CrudRepository<Persona, Integer> {
 	
 	public Optional<Persona> findById(Integer id);
 	
+	public List<Persona> findByFirstName(String firstName);
+	
+	public List<Persona> findByLastName(String lastName);
+	
 }
