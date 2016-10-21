@@ -25,6 +25,8 @@ public class Test2 {
 	@Mock
 	private PersonaRepo pRepo;
 	
+	private Persona [] pList = new Persona[] {new Persona("Unai", "Perez"), new Persona("Iker", "Perez"), new Persona("Leire", "Goitia")};
+	
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
@@ -44,7 +46,7 @@ public class Test2 {
 	@Test
 	public void test2() {
 		given(pRepo.findByFirstName(any())).willAnswer((inv) -> {
-			Stream<Persona> s = Arrays.asList(new Persona[] {new Persona("Unai", "Perez"), new Persona("Iker", "Perez"), new Persona("Leire", "Goitia")}).stream();
+			Stream<Persona> s = Arrays.asList(pList).stream();
 			return s.filter(p -> p.getFirstName().equals(inv.getArgumentAt(0, String.class))).collect(Collectors.toList());
 		});
 		assertEquals(pRepo.findByFirstName("Unai").get(0), new Persona("Unai", "Perez"));
@@ -54,9 +56,10 @@ public class Test2 {
 	@Test
 	public void test3() {
 		given(pRepo.findByLastName(any())).willAnswer((inv) -> {
-			Stream<Persona> s = Arrays.asList(new Persona[] {new Persona("Unai", "Perez"), new Persona("Iker", "Perez"), new Persona("Leire", "Goitia")}).stream();
+			Stream<Persona> s = Arrays.asList(pList).stream();
 			return s.filter(p -> p.getLastName().equals(inv.getArgumentAt(0, String.class))).collect(Collectors.toList());
 		});
+		assertEquals(pRepo.findByLastName("Perez").size(), 2);
 		assertEquals(pRepo.findByLastName("Perez"), Arrays.asList(new Persona[] {new Persona("Unai", "Perez"), new Persona("Iker", "Perez")}));
 	}
 	

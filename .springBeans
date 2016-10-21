@@ -7,6 +7,8 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
+		<config>java:app.Application</config>
+		<config>src/main/java/app/Application.java</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

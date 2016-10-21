@@ -56,6 +56,9 @@
            <plugin>
                <groupId>org.springframework.boot</groupId>
                <artifactId>spring-boot-maven-plugin</artifactId>
+               <configuration>
+               	<mainClass>app.Application</mainClass>
+               </configuration>
            </plugin>
            <plugin>
 			<groupId>org.apache.maven.plugins</groupId>
@@ -65,6 +68,21 @@
 				<source>1.8</source>
 			</configuration>
 		</plugin>
+		<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+	        <artifactId>exec-maven-plugin</artifactId>
+	        <executions>
+	            <execution>
+	                <id>default-cli</id>
+	                <goals>
+	                    <goal>java</goal>
+	                </goals>
+	                <configuration>
+	                    <mainClass>app.Application</mainClass>
+	                </configuration>
+	            </execution>
+	        </executions>
+	    </plugin>
        </plugins>
    </build>
    
